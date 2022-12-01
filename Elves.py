@@ -1,5 +1,4 @@
 from io import TextIOWrapper
-
 class Elf:
     def __init__(self):
         self.food_items = []
@@ -22,12 +21,14 @@ class Elf:
 class Elves:
     def __init__(self):
         self.elves = []
-        self.most_calories = -1
 
     def add_elf(self, elf : Elf):
         self.elves.append(elf)
-        if elf.calories > self.most_calories:
-            self.most_calories = elf.calories
+
+    @property
+    def most_calories(self):
+        self.elves.sort(key=lambda elf:elf.calories, reverse=True)
+        return [self.elves[0].calories, sum(self.elves[x].calories for x in range(0,3))]
 
 
 class Bagpacker: #wordplay on backpack and packing bags
