@@ -1,5 +1,7 @@
 from Elves import Bagpacker
 
+
+
 filename = "inputs/DayOne.csv"
 
 with open(filename) as infile:

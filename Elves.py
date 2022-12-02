@@ -1,4 +1,6 @@
 from io import TextIOWrapper
+from enum import Enum
+
 class Elf:
     def __init__(self):
         self.food_items = []
@@ -57,3 +59,61 @@ class Bagpacker: #wordplay on backpack and packing bags
             backpack = self.get_next_backpack()
 
         return all_elves
+
+class HandPosition:
+    rock = 1
+    paper = 2
+    scissor = 3
+
+    def __init__(self, value : str = None):
+        if value == 'A' or value ==  'X':
+            self.state = self.rock
+        elif value == 'B' or value ==  'Y':
+            self.state = self.paper
+        elif value == 'C' or value ==  'Z':
+            self.state = self.scissor
+        else:
+            self.state = None
+
+    def __gt__(self, other):
+        if self == other:
+            return False
+        if self.state == self.rock:
+            return True if other.state == self.scissor else False
+        if self.state == self.paper:
+            return True if other.state == self.rock else False
+        if self.state == self.scissor:
+            return True if other.state == self.paper else False
+
+    def __lt__(self, other):
+        if self == other:
+            return False
+        else:
+            return not self > other
+
+    def __eq__(self, other):
+        if self.state == other.state:
+            return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    @property
+    def points(self):
+        return self.state
+
+class LizardSpock:
+    def __init__(self):
+        self.total_points = 0
+
+    def reset(self):
+        self.total_points = 0
+
+    def play(self, me : HandPosition, them : HandPosition):
+        to_add = 0
+        to_add += me.state
+        if me > them:
+            to_add += 6
+        elif me == them:
+            to_add += 3
+        self.total_points += to_add
