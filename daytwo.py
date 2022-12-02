@@ -12,5 +12,5 @@ with open(filename) as infile:
         me = HandPosition(value = line[1])
         them = HandPosition(value = line[0])
         evaluator.play(me, them)
-
+#
 print(evaluator.total_points)
